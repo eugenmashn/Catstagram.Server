@@ -69,7 +69,7 @@ namespace Catstagrams.Server
           
 
             app.UseRouting();
-
+            app.UseCors()
             app.UseAuthentication();
             app.UseAuthorization();
 
