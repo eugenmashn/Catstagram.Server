@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using Catstagrams.Server.Infrastructure;
 
 namespace Catstagrams.Server
 {
@@ -30,12 +31,20 @@ namespace Catstagrams.Server
                 .AddDbContext<CatstagramDbContext>(options =>options
                 .UseSqlServer( Configuration.GetConnectionString("DefaultConnection")));
             services
-                .AddIdentity<User,IdentityRole>()
+                .AddIdentity<User,IdentityRole>(options => 
+                { 
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 6;
+
+                })
                 .AddEntityFrameworkStores<CatstagramDbContext>();
             var applicationSettingsConfiguration = Configuration.GetSection("ApplicationSettings");
-            services.Configure<ApplicationSettings>(applicationSettingsConfiguration);
+            services.Configure<AppSettings>(applicationSettingsConfiguration);
 
-            var appSettings = applicationSettingsConfiguration.Get<ApplicationSettings>();
+            var appSettings = applicationSettingsConfiguration.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
            {
@@ -61,15 +70,17 @@ namespace Catstagrams.Server
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if(env.IsDevelopment())
             {
-                app.UseDatabaseErrorPage();
+                app.UseDeveloperExceptionPage(); 
             }
-           
-          
+            
 
             app.UseRouting();
-            app.UseCors()
+            app.UseCors(options => options
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -77,6 +88,8 @@ namespace Catstagrams.Server
             {
                 endpoints.MapControllers();
             });
+
+            app.ApplyMigrations();
         }
     }
 }

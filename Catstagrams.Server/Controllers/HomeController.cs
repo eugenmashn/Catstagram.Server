@@ -7,12 +7,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Catstagrams.Server.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class HomeController : ControllerBase
+    
+    public class HomeController : ApiController
     {
         [Authorize]
-        public IActionResult Get()
+        public ActionResult Get()
         {
             return this.Ok("Working");
         }
