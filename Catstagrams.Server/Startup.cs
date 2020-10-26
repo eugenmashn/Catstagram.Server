@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Catstagrams.Server.Infrastructure;
+using Catstagrams.Server.Data.Models;
 
 namespace Catstagrams.Server
 {
