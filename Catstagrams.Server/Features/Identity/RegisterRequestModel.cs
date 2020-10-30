@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catstagrams.Server.Models.Identiity
+namespace Catstagrams.Server.Features.Identiity
 {
     public class RegisterRequestModel
     {

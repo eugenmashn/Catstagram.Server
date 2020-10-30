@@ -1,7 +1,6 @@
 ﻿
 
 using Catstagrams.Server.Data.Models;
-using Catstagrams.Server.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

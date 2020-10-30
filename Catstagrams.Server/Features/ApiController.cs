@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catstagrams.Server.Controllers
+namespace Catstagrams.Server.Features
 {
     [ApiController]
     [Route("[controller]")]
